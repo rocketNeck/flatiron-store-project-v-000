@@ -46,7 +46,7 @@ class Cart < ActiveRecord::Base
     total
   end
 
-
+  ## on checkout set status of cart to submitted so that current_cart gets the right cart :) !!!!
   def checkout
     status = "submitted"
     line_items.each do |line_item|

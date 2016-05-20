@@ -1,13 +1,5 @@
 # it "has many carts" do
-#   @user.carts.create
-#   expect(@user.carts.count).to eq(1)
-# end
-#
 # it "has a current_cart" do
-#   @user.current_cart = @user.carts.create
-#   expect(@user.current_cart).to be_a(Cart)
-# end
-
 
 
 class User < ActiveRecord::Base
@@ -17,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :carts
   belongs_to :current_cart, :class_name => "Cart"
 
+  # a cart remains "not submitted" as long as customer is still looking
   def current_cart
     carts.where(status: "not submitted").first
   end
