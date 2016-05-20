@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
   before(:each) do
     @user = User.first
   end
-
+  
   it "has many carts" do
     @user.carts.create
     expect(@user.carts.count).to eq(1)
