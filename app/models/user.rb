@@ -10,12 +10,14 @@ class User < ActiveRecord::Base
   belongs_to :current_cart, :class_name => "Cart"
 
   # a cart remains "not submitted" as long as customer is still looking
-  def current_cart
-    carts.where(status: "not submitted").first
+  def set_current_cart
+    cart = self.carts.build
+    self.current_cart_id = cart.id
+    save
   end
 
 ###"sets current_cart to nil on checkout"
-  def kill_cart
+  def after_checkout_cart
     self.current_cart_id = nil
     save
   end

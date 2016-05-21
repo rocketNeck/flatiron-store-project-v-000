@@ -13,4 +13,5 @@ Item.all.each do |item|
   item.save
   counter += 1
 end
-User.create(email: 'jesse@gmail.com', password: "apassword")
+# User.create(email: 'jesse@gmail.com', password: "apassword")
+FactoryGirl.create(:user)

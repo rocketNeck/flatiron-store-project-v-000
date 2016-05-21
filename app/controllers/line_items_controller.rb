@@ -1,4 +1,5 @@
 class LineItemsController < ApplicationController
+  before_filter :authenticate_user!
   def create
     current_user.create_current_cart unless current_user.current_cart
     line_item = current_user.current_cart.add_item(params[:item_id])

@@ -1,7 +1,7 @@
 <h1>Your Cart</h1>
 
 <% if notice %>
-  <p><%= notice %></p> 
+  <p><%= notice %></p>
 <% end %>
 
 <% current_cart.line_items.each do |line_item| %>
@@ -12,4 +12,4 @@
 
 <p>Order total: <strong><%= number_to_currency(current_cart.total) %></strong> </p>
 
-<%= button_to 'Checkout', checkout_path %>
+<%= button_to 'Checkout', checkout_path(cart) if cart.status != "submitted" %>
