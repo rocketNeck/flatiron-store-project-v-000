@@ -1,12 +1,18 @@
 class LineItemsController < ApplicationController
   before_filter :authenticate_user!
-  def create
-    current_user.create_current_cart unless current_user.current_cart
-    line_item = current_user.current_cart.add_item(params[:item_id])
-    if line_item.save
-      redirect_to cart_path(current_user.current_cart), {notice: 'Item added to cart!'}
+   def create
+    if current_user.current_cart
+      @cart = current_user.current_cart
     else
-      redirect_to store_path, {notice: 'Unable to add item'}
+      @cart = Cart.create
+      @cart.user = current_user
+      current_user.current_cart = @cart
+      current_user.save
+      @cart.save
     end
+    @item = Item.find_by_id(params[:item_id])
+    new_line = @cart.add_item(@item.id)
+    new_line.save
+    redirect_to cart_path(@cart)
   end
 end

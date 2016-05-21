@@ -1,8 +1,11 @@
-
-
-<% if notice %>
-  <p><%= notice %></p>
+<% @categories.each do |category| %>
+  <%= link_to category.title, category_path(category) %>
 <% end %>
 
-<%= render partial: 'categories/categories_index', locals: {categories: @categories} %>
-<%= render partial: 'items/index', locals: {items: @items} %>
+<% @items.available_items.each do |item| %>
+  <p><%= item.title %> | $<%= item.price.to_f / 100 %> | <%= button_to 'Add to Cart', line_items_path(item_id: item) %></p>
+<% end %>
+
+<% if current_user && current_user.current_cart %>
+  <%= link_to "Cart", cart_path(current_user.current_cart) %>
+<% end %>

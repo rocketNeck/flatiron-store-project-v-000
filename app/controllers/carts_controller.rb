@@ -4,6 +4,11 @@ class CartsController < ApplicationController
     @cart = current_cart
   end
 
+  def checkout 
+    @cart = Cart.find(params[:id])
+    @cart.checkout_cart
+    redirect_to cart_path(@cart)
+  end
 
 
 end
