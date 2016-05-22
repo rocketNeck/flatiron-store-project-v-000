@@ -47,11 +47,14 @@ class Cart < ActiveRecord::Base
   end
 
   ## on checkout set status of cart to submitted so that current_cart gets the right cart :) !!!!
-  def checkout
-    status = "submitted"
-    line_items.each do |line_item|
-      line_item.item.inventory -= line_item.quantity
-      line_item.item.save
+   def checkout_cart
+    self.line_items.each do |li|
+      li.item.inventory -= li.quantity
+      li.item.save
     end
+    self.line_items.clear
+    self.status = "submitted"
+    self.user.current_cart_id = nil
+    self.user.save
   end
 end
